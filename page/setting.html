@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../assets/bootstrap/css/bootstrap.css">
+    <link href="../assets/fontawesome/css/all.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <br />
+        <a href="../index.html"><button type="button" class="btn btn-primary"><i class="fas fa-arrow-left"></i> กลับ</button></a>
+        <br /><br/>
+        <div class="card">
+            <div class="card-header">
+                <i class='fas fa-cog'></i> <i class="fas fa-server text-danger"></i>ตั้งค่าเชื่อมต่อเครื่องแม่ข่าย
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <label>Server Ip</label>
+                        <input type="text" class="form-control" id="server_ip"/>
+                    </div>
+                </div>
+                <label id="exserver">Ex.http://localhost:0000</label>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary" onclick="saveServer()"><i class="fas fa-save"></i> บันทึกการตั้งค่า</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/jquery-3.2.1.slim.min.js"></script>
+    <script src="../renderer.js"></script>
+    <script src="../controller/setting.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.js"></script>
+    <script src="../js/popper.min.js"></script>
+</body>
+
+</html>

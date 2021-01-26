@@ -1,0 +1,25 @@
+@media (prefers-color-scheme: dark) {
+    body { background:  #333; color: white; }
+  }
+  
+  @media (prefers-color-scheme: light) {
+    body { background:  #ddd; color: black; }
+  }
+
+  #body-login{
+      margin: 20px;
+  }
+
+  #exserver{
+      font-size: 12px;
+      color: #ddd;
+  }
+
+  .input-group-text{
+      width: 40px;
+      text-align: center !important;
+  }
+
+  .box-left{
+      background: #111111;
+  }
