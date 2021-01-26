@@ -2,204 +2,311 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <!--
+    <meta charset="UTF-8">
+    <!--
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   -->
 
-  <title>Clinic - SmartCard</title>
-  <link rel="stylesheet" type="text/css" href="./css/styles.css">
-  <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
-  
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
+    <title>Clinic - SmartCard</title>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
+    <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
 
-  <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
-  <!--load all styles -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <!--load all styles -->
 </head>
 
 <body>
-  <div class="screen" style="height: 100vh; width: 100px; position: fixed; z-index: -1;"></div>
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-        aria-selected="true"><i class="far fa-address-card"></i> อ่านบัตรประชาชน</a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-        aria-selected="false"><i class="fas fa-cog"></i> ตั้งค่าการเชื่อมต่อ Server</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-      <div class="container-fluid" style=" margin-top:10px;">
-        <div class="row">
-          <div class="col-md-6 col-lg-6">
-            <label>ข้อมูลหน้าบัตร</label>
-            <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 20px; border-radius: 5px; margin-bottom: 10px;">
-            <form>
-              <div class="form-row">
-                <div class="col-lg-6 col-md-8 col-sm-12">
-                  <label class="sr-only" for="inlineFormInput">CID</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="far fa-id-card"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="cid" placeholder="CID..">
-                  </div>
-                </div>
-              </div>
+    <div class="screen" style="height: 100vh; width: 100px; position: fixed; z-index: -1;"></div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="far fa-address-card"></i> อ่านบัตรประชาชน</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"><i class="fas fa-cog"></i> ตั้งค่าการเชื่อมต่อ Server</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="container-fluid" style=" margin-top:10px;">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6">
+                        <label>ข้อมูลหน้าบัตร</label>
+                        <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 20px; border-radius: 5px; margin-bottom: 10px;">
+                            <label id="statuscard" class="alert alert-danger" style="width: 100%; text-align: center; display: none;">กรุณาเสียบบัตร Smart Card</label>
+                            <form>
+                                <div class="form-row">
+                                    <div class="col-lg-6 col-md-8 col-sm-12">
+                                        <label class="sr-only" for="inlineFormInput">CID</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="far fa-id-card"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="cid" placeholder="CID..">
+                                        </div>
+                                    </div>
+                                </div>
 
-              <div class="form-row">
-                <div class="col-md-4 col-lg-3 col-sm-6">
-                  <label class="sr-only" for="inlineFormInput">คำนำหน้าชื่อ</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="far fa-user"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="prename" placeholder="คำนำหน้าชื่อ..">
-                  </div>
-                </div>
-                <div class="col-md-8 col-lg-5 col-sm-6">
-                  <label class="sr-only" for="inlineFormInput">ชื่อ</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="far fa-user"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="fname" placeholder="ชื่อ..">
-                  </div>
-                </div>
-              </div>
+                                <div class="form-row">
+                                    <div class="col-md-4 col-lg-3 col-sm-6">
+                                        <label class="sr-only" for="inlineFormInput">คำนำหน้าชื่อ</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="far fa-user"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="prefix" placeholder="คำนำหน้าชื่อ..">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-5 col-sm-6">
+                                        <label class="sr-only" for="inlineFormInput">ชื่อ</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="far fa-user"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="fname" placeholder="ชื่อ..">
+                                        </div>
+                                    </div>
+                                </div>
 
-              <div class="form-row">
-                <div class="col-md-8 col-lg-8 col-sm-8">
-                  <label class="sr-only" for="inlineFormInputGroup">นามสกุล</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="far fa-id-badge"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="lname" placeholder="นามสกุล..">
-                  </div>
-                </div>
-              </div>
+                                <div class="form-row">
+                                    <div class="col-md-8 col-lg-8 col-sm-8">
+                                        <label class="sr-only" for="inlineFormInputGroup">นามสกุล</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="far fa-id-badge"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="lname" placeholder="นามสกุล..">
+                                        </div>
+                                    </div>
+                                </div>
 
-              <div class="form-row">
-                <div class="col-md-6 col-lg-4 col-sm-12">
-                  <label class="sr-only" for="inlineFormInput">เพศ</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fas fa-restroom"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="sex" placeholder="เพศ..">
-                  </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-sm-12">
-                  <label class="sr-only" for="inlineFormInput">วันเกิด</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="far fa-id-card"></i></div>
-                    </div>
-                    <input type="text" class="form-control" id="birthday" placeholder="วันเกิด..">
-                  </div>
-                </div>
-              </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 col-lg-4 col-sm-12">
+                                        <label class="sr-only" for="inlineFormInput">เพศ</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fas fa-restroom"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="sex" placeholder="เพศ..">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4 col-sm-12">
+                                        <label class="sr-only" for="inlineFormInput">วันเกิด</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="far fa-id-card"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="birthday" placeholder="วันเกิด..">
+                                        </div>
+                                    </div>
+                                </div>
 
-              <div class="form-row">
-                <div class="col-12">
-                   <i class="far fa-address-card"></i> <label>ที่อยู่</label>
-                  <label class="sr-only" for="inlineFormInput">ที่อยู่</label>
-                  <div class="input-group mb-2">
-                    <textarea class="form-control" id="address" rows="3" placeholder="ที่อยู่..."></textarea>
-                  </div>
-                </div>
-              </div>
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <i class="far fa-address-card"></i> <label>ที่อยู่</label>
+                                        <label class="sr-only" for="inlineFormInput">ที่อยู่</label>
+                                        <div class="input-group mb-2">
+                                            <textarea class="form-control" id="address" rows="3" placeholder="ที่อยู่..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
-              <div class="form-row">
-                <div class="col-12">
-                  <i class="fas fa-shield-virus"></i> <label>โรคประจำตัว(* ถ้ามี)</label>
-                  <div class="input-group mb-2">
-                    <textarea class="form-control" id="disease" rows="2" placeholder="โรคประจำตัว..."></textarea>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="form-row">
-                <div class="col-12">
-                   <i class="fas fa-pills"></i> <label>แพ้ยา(* ถ้ามี)</label>
-                  <div class="input-group mb-2">
-                    <textarea class="form-control" id="drug" rows="2" placeholder="แพ้ยา..."></textarea>
-                  </div>
-                </div>
-              </div>
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <i class="fas fa-shield-virus"></i> <label>โรคประจำตัว(* ถ้ามี)</label>
+                                        <div class="input-group mb-2">
+                                            <textarea class="form-control" id="disease" rows="2" placeholder="โรคประจำตัว..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
-            </form>
-            </div>
-            <div class="row">
-              <div class="col-auto">
-                <button type="submit" class="btn btn-secondary mb-2"><i class="far fa-save"></i>
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <i class="fas fa-pills"></i> <label>แพ้ยา(* ถ้ามี)</label>
+                                        <div class="input-group mb-2">
+                                            <textarea class="form-control" id="drug" rows="2" placeholder="แพ้ยา..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-secondary mb-2"><i class="far fa-save"></i>
                   ลงทะเบียนรายใหม่</button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6 col-lg-6">
-            <label>ประวัติลูกค้า / ผู้มารับบริการ</label>
-            <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-            </div>
-            <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-people-arrows"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-6">
+                        <label>ประวัติลูกค้า / ผู้มารับบริการ</label>
+                        <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                            โทร.
+                            <input type="text" class="form-control" id="tel"><br/> Hn
+                            <input type="text" class="form-control" id="hn"><br/> Id
+                            <input type="text" class="form-control" id="id"><br/>
+                        </div>
+                        <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-people-arrows"></i>
               นำเข้าคิวห้องตรวจ</button>
-          </div>
-        </div>
+                    </div>
+                </div>
 
-      </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div id="body-login">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="username" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="password" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <br />
+                        <button type="button" class="btn btn-primary" onclick="Auth()"><i class="fas fa-key"></i> login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-      <div id="body-login">
-        <div class="row">
-          <div class="col-md-4 col-lg-4">
-            <label>Username</label>
-            <input type="text" class="form-control" id="username" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-lg-4">
-            <label>Password</label>
-            <input type="password" class="form-control" id="password" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-lg-4">
-            <br />
-            <button type="button" class="btn btn-primary" onclick="Auth()"><i class="fas fa-key"></i> login</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- You can also require other files to run in this process -->
-  <script src="./js/jquery-3.2.1.slim.min.js"></script>
-  <script src="./renderer.js"></script>
-  <script src="./assets/bootstrap/js/bootstrap.js"></script>
-  <script src="./js/popper.min.js"></script>
+    <!-- You can also require other files to run in this process -->
+    <script src="./js/jquery-3.2.1.slim.min.js"></script>
+    <script src="./renderer.js"></script>
+    <script src="./assets/bootstrap/js/bootstrap.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script type="text/javascript">
+        setScreen();
 
-  <script type="text/javascript">
-    setScreen();
-    function setScreen(){
-      var window = $(".screen").height();
-      //alert(window)
-      $(".box-left").css({'height': window - 140});
-    }
+        function setScreen() {
+            var window = $(".screen").height();
+            //alert(window)
+            $(".box-left").css({
+                'height': window - 140
+            });
+        }
 
-    function Auth() {
-      var username = $("#username").val();
-      var password = $("#password").val();
-      if (username == "admin" && password == "minad") {
-        window.location = "page/setting.html";
-      } else {
-        alert("Login Fail...!!!");
-      }
-    }
-  </script>
+        function Auth() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            if (username == "admin" && password == "minad") {
+                window.location = "page/setting.html";
+            } else {
+                alert("Login Fail...!!!");
+            }
+        }
+
+        var socket = io.connect('http://localhost:9898');
+        //const dataEl = document.getElementById('data');
+        socket.on('connect', function() {
+            socket.emit('set-query', {
+                query: [
+                    'cid',
+                    'name',
+                    'nameEn',
+                    'dob',
+                    'gender',
+                    'issuer',
+                    'issueDate',
+                    'expireDate',
+                    'address',
+                    'photo',
+                    'nhso'
+                ]
+            });
+        });
+        socket.on('smc-data', function(data) {
+            console.log(data);
+            //let res = JSON.stringify(data);
+            let rs = data.data;
+            $("#cid").val(rs.cid);
+            $("#prefix").val(rs.name.prefix);
+            $("#fname").val(rs.name.firstname);
+            $("#lname").val(rs.name.lastname);
+            $("#address").val(rs.address.full);
+            $("#birthday").val(rs.dob);
+
+            let sex = string = "";
+            if (rs.gender == 1) {
+                sex = "ชาย";
+            } else {
+                sex = "หญิง";
+            }
+            $("#sex").val(sex);
+            searchPatient(rs.name.firstname, rs.name.lastname);
+        });
+
+        socket.on('smc-error', function(data) {
+            console.log(data);
+            let datas = JSON.stringify(data);
+            //$("#card").html(datas);
+            alert("เกิดข้อผิดพลาดกรุณาปิดแล้วเปิดโปรแกรมใหม่...");
+        });
+
+        socket.on('smc-removed', function(data) {
+            console.log(data);
+            let datas = JSON.stringify(data);
+            if (data.status == 205) {
+                $("#cid").val("");
+                $("#fname").val("");
+                $("#lname").val("");
+                $("#statuscard").show();
+                //alert("กรุณาเสียบบัตร...");
+            }
+            //$("#card").html(datas);
+        });
+
+        socket.on('smc-incorrect', function(data) {
+            $("#statuscard").hide();
+            //console.log(data);
+            //let datas = JSON.stringify(data);
+            //$("#card").html(datas);
+        });
+        socket.on('smc-inserted', function(data) {
+            $("#statuscard").hide();
+            //console.log(data);
+            //let datas = JSON.stringify(data);
+            //$("#card").html(datas);
+        });
+
+        function searchPatient(name, lname) {
+            var url = "http://122.154.239.66/mini-clinic?r=patient/checkpatientsmartcard";
+            //ค้นหาคนในระบบ
+            var data = {
+                name: name,
+                lname: lname
+            };
+
+            $.post(url, data, function(res) {
+                if (res == 1) {
+                    alert("ไม่มีทะเบียนลูกค้าในระบบ...");
+                    //$("#status").text("ไม่มีทะเบียนลูกค้าในระบบ...");
+                    //$("#btn-register").show();
+                    //$("#hnshow").hide();
+                    return false;
+                } else {
+                    //alert("ชื่อ = " + res.name + " hn = " + res.hn);
+                    $("#tel").val(res.tel);
+                    $("#id").val(res.id);
+                    $("#hn").val(res.hn);
+                    $("#drug").val(res.drug);
+                    $("#disease").val(res.disease);
+                    //$("#hnshow").show();
+                    //$("#btn-update").show();
+                    //$("#btn-seq").show();
+                }
+            }, 'json');
+        }
+    </script>
 
 </body>
 
