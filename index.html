@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="./assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
     <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="./js/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!--load all styles -->
@@ -22,12 +23,10 @@
     <div class="screen" style="height: 100vh; width: 100px; position: fixed; z-index: -1;"></div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true"><i class="far fa-address-card"></i> อ่านบัตรประชาชน</a>
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="far fa-address-card text-danger"></i> อ่านบัตรประชาชน</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-                aria-selected="false"><i class="fas fa-cog"></i> ตั้งค่าการเชื่อมต่อ Server</a>
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"><i class="fas fa-cog text-warning"></i> ตั้งค่าการเชื่อมต่อ Server</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -36,12 +35,13 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-6">
                         <label>ข้อมูลหน้าบัตร</label>
-                        <div class="box-left"
-                            style="overflow:auto; border: solid 1px #666666; padding: 20px; border-radius: 5px; margin-bottom: 10px;">
-                            <label id="statuscard" class="alert alert-danger"
-                                style="width: 100%; text-align: center; display: none;">กรุณาเสียบบัตร Smart
+                        <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 20px; border-radius: 5px; margin-bottom: 10px;">
+                            <label id="statuscard" class="alert alert-danger" style="width: 100%; text-align: center; display: none;">กรุณาเสียบบัตร Smart
                                 Card</label>
                             <form>
+                                <div style="margin-bottom: 20px;">
+                                    <img id="card_img" src="images/camera-icon.png" style="max-height: 200px; border-radius: 10px;" /><br/>
+                                </div>
                                 <div class="form-row">
                                     <div class="col-lg-6 col-md-8 col-sm-12">
                                         <label class="sr-only" for="inlineFormInput">CID</label>
@@ -61,8 +61,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="far fa-user"></i></div>
                                             </div>
-                                            <input type="text" class="form-control" id="prefix"
-                                                placeholder="คำนำหน้าชื่อ..">
+                                            <input type="text" class="form-control" id="prefix" placeholder="คำนำหน้าชื่อ..">
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-5 col-sm-6">
@@ -104,8 +103,19 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="far fa-id-card"></i></div>
                                             </div>
-                                            <input type="text" class="form-control" id="birthday"
-                                                placeholder="วันเกิด..">
+                                            <input type="text" class="form-control" id="birthday" placeholder="วันเกิด..">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 col-lg-4 col-sm-12">
+                                        <label class="sr-only" for="inlineFormInput">โทรศัพท์</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text"><i class="fas fa-phone"></i></div>
+                                            </div>
+                                            <input type="text" class="form-control" id="tel" maxlength="10" placeholder="โทรศัพท์.." onKeyUp="if (this.value * 1 != this.value)
+                                            this.value = '';">
                                         </div>
                                     </div>
                                 </div>
@@ -115,8 +125,7 @@
                                         <i class="far fa-address-card"></i> <label>ที่อยู่</label>
                                         <label class="sr-only" for="inlineFormInput">ที่อยู่</label>
                                         <div class="input-group mb-2">
-                                            <textarea class="form-control" id="address" rows="3"
-                                                placeholder="ที่อยู่..."></textarea>
+                                            <textarea class="form-control" id="address" rows="3" placeholder="ที่อยู่..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -125,8 +134,7 @@
                                     <div class="col-12">
                                         <i class="fas fa-shield-virus"></i> <label>โรคประจำตัว(* ถ้ามี)</label>
                                         <div class="input-group mb-2">
-                                            <textarea class="form-control" id="disease" rows="2"
-                                                placeholder="โรคประจำตัว..."></textarea>
+                                            <textarea class="form-control" id="disease" rows="2" placeholder="โรคประจำตัว..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -135,8 +143,7 @@
                                     <div class="col-12">
                                         <i class="fas fa-pills"></i> <label>แพ้ยา(* ถ้ามี)</label>
                                         <div class="input-group mb-2">
-                                            <textarea class="form-control" id="drug" rows="2"
-                                                placeholder="แพ้ยา..."></textarea>
+                                            <textarea class="form-control" id="drug" rows="2" placeholder="แพ้ยา..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -148,17 +155,104 @@
                                 <button type="submit" class="btn btn-secondary mb-2"><i class="far fa-save"></i>
                                     ลงทะเบียนรายใหม่</button>
                             </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-secondary mb-2" onclick="readcard()"><i class="far fa-eye"></i>
+                                    อ่านข้อมูลบัตร</button>
+                            </div>
                         </div>
                     </div>
-
+                    <input type="hidden" class="form-control" id="hn"><br />
+                    <input type="hidden" class="form-control" id="id"><br />
                     <div class="col-md-6 col-lg-6">
-                        <label>ประวัติลูกค้า / ผู้มารับบริการ</label>
-                        <div class="box-left"
-                            style="overflow:auto; border: solid 1px #666666; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-                            โทร.
-                            <input type="text" class="form-control" id="tel"><br /> Hn
-                            <input type="text" class="form-control" id="hn"><br /> Id
-                            <input type="text" class="form-control" id="id"><br />
+                        <i class="fa fa-male"></i> <label>ตรวจร่างกาย / ซักประวัติ</label>
+                        <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+
+
+                            <div class="row" style=" margin: 0px;">
+                                <div class="col-md-12 col-lg-12" style=" padding-bottom: 0px;" id="seqright">
+                                    <div class="alert alert-danger">เครื่องหมาย * ห้ามว่าง</div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>น้ำหนัก</label>
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" id="weight" onKeyUp="if (this.value * 1 != this.value)
+                                                                this.value = '';" placeholder="น้ำหนัก..">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">กก.</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>ส่วนสูง</label>
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" id="height" onKeyUp="if (this.value * 1 != this.value)
+                                                                this.value = '';" placeholder="ส่วนสูง..">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">ซม.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <label>อุณหภูมิร่างกาย</label>
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control" id="btemp" onKeyUp="if (this.value * 1 != this.value)
+                                                                this.value = '';" placeholder="อุณหภูมิร่างกาย..">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">&#176;C</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>อัตราการเต้นชีพจร</label>
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control" id="pr" onKeyUp="if (this.value * 1 != this.value)
+                                                                this.value = '';" placeholder="อัตราการเต้นชีพจร..">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">/m</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <label>อัตราการหายใจ</label>
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control" id="rr" onKeyUp="if (this.value * 1 != this.value)
+                                                                this.value = '';" placeholder="อัตราการหายใจ..">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">/m</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>ความดันโลหิต</label>
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control" id="ht" onKeyUp="if (this.value * 1 != this.value)
+                                                                this.value = '';" placeholder="ความดันโลหิต..">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>รอบเอว</label>
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control" id="waistline" onKeyUp="if (this.value * 1 != this.value)
+                                                                this.value = '';" placeholder="รอบเอว..">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style=" margin-top: 20px;">
+                                        <div class="col-lg-12">
+                                            <b style=" font-size: 16px; color: #cc6600;"><i class="fa fa-frown-o"></i> อาการที่มารักษา <span style="color:red;">*</span></b>
+                                            <textarea class="form-control" name="cc_detail" id="cc_detail" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-people-arrows"></i>
                             นำเข้าคิวห้องตรวจ</button>
@@ -192,7 +286,7 @@
         </div>
     </div>
     <!-- You can also require other files to run in this process -->
-    <script src="./js/jquery-3.2.1.slim.min.js"></script>
+
     <script src="./renderer.js"></script>
     <script src="./assets/bootstrap/js/bootstrap.js"></script>
     <script src="./js/popper.min.js"></script>
@@ -221,82 +315,99 @@
         var socket = io.connect('http://localhost:9898');
         //console.log('check 1', socket.connected);
         //Check Connection
-        if (socket.connected == false) {
-            alert("ระบบ Smart Card มีปัญหาไม่สามารถเชื่อมต่อได้...");
-            //return false;
-        } else {
-            socket.on('connect', function () {
-                socket.emit('set-query', {
-                    query: [
-                        'cid',
-                        'name',
-                        'nameEn',
-                        'dob',
-                        'gender',
-                        'issuer',
-                        'issueDate',
-                        'expireDate',
-                        'address',
-                        'photo',
-                        'nhso'
-                    ]
-                });
-            });
 
-            socket.on('smc-data', function (data) {
-                console.log(data);
-                //let res = JSON.stringify(data);
-                let rs = data.data;
-                $("#cid").val(rs.cid);
-                $("#prefix").val(rs.name.prefix);
-                $("#fname").val(rs.name.firstname);
-                $("#lname").val(rs.name.lastname);
-                $("#address").val(rs.address.full);
-                $("#birthday").val(rs.dob);
+        console.log('check 1', socket.connected);
+        //alert("ระบบ Smart Card มีปัญหาไม่สามารถเชื่อมต่อได้...");
+        //return false;
 
-                let sex = string = "";
-                if (rs.gender == 1) {
-                    sex = "ชาย";
-                } else {
-                    sex = "หญิง";
-                }
-                $("#sex").val(sex);
-                //searchPatient(rs.name.firstname, rs.name.lastname);
+        socket.on('connect', function() {
+            socket.emit('set-query', {
+                query: [
+                    'cid',
+                    'name',
+                    'nameEn',
+                    'dob',
+                    'gender',
+                    'issuer',
+                    'issueDate',
+                    'expireDate',
+                    'address',
+                    'photo',
+                    'nhso'
+                ]
             });
+        });
 
-            socket.on('smc-error', function (data) {
-                console.log(data);
-                let datas = JSON.stringify(data);
-                //$("#card").html(datas);
-                alert("เกิดข้อผิดพลาดกรุณาปิดแล้วเปิดโปรแกรมใหม่...");
-            });
+        socket.on('smc-data', function(data) {
+            console.log(data);
+            //let res = JSON.stringify(data);
+            let rs = data.data;
+            $("#cid").val(rs.cid);
+            $("#prefix").val(rs.name.prefix);
+            $("#fname").val(rs.name.firstname);
+            $("#lname").val(rs.name.lastname);
+            $("#address").val(rs.address.full);
+            $("#birthday").val(rs.dob);
+            $("#card_img").attr("src", rs.photo);
+            //string baseStr64="/9j/4AAQSkZJRgABAQE...";
+            card_img.setAttribute('src', "data:image/jpg;base64," + rs.photo);
+            let sex = string = "";
+            if (rs.gender == 1) {
+                sex = "ชาย";
+            } else {
+                sex = "หญิง";
+            }
+            $("#sex").val(sex);
+            searchPatient(rs.cid);
+            //searchPatient(rs.name.firstname, rs.name.lastname);
+        });
 
-            socket.on('smc-removed', function (data) {
-                console.log(data);
-                let datas = JSON.stringify(data);
-                if (data.status == 205) {
-                    $("#cid").val("");
-                    $("#fname").val("");
-                    $("#lname").val("");
-                    $("#statuscard").show();
-                    //alert("กรุณาเสียบบัตร...");
-                }
-                //$("#card").html(datas);
-            });
+        socket.on('smc-error', function(data) {
+            console.log(data);
+            let datas = JSON.stringify(data);
+            //$("#card").html(datas);
+            alert("เกิดข้อผิดพลาดกรุณาปิดแล้วเปิดโปรแกรมใหม่...");
+        });
 
-            socket.on('smc-incorrect', function (data) {
-                $("#statuscard").hide();
-                //console.log(data);
-                //let datas = JSON.stringify(data);
-                //$("#card").html(datas);
-            });
+        socket.on('smc-removed', function(data) {
+            console.log(data);
+            let datas = JSON.stringify(data);
+            if (data.status == 205) {
+                clearTxt();
+                $("#statuscard").show();
+                //alert("กรุณาเสียบบัตร...");
+            }
+            //$("#card").html(datas);
+        });
 
-            socket.on('smc-inserted', function (data) {
-                $("#statuscard").hide();
-                //console.log(data);
-                //let datas = JSON.stringify(data);
-                //$("#card").html(datas);
-            });
+        socket.on('smc-incorrect', function(data) {
+            $("#statuscard").hide();
+            //console.log(data);
+            //let datas = JSON.stringify(data);
+            //$("#card").html(datas);
+        });
+
+        socket.on('smc-inserted', function(data) {
+            $("#statuscard").hide();
+            //console.log(data);
+            //let datas = JSON.stringify(data);
+            //$("#card").html(datas);
+        });
+
+        function clearTxt() {
+            card_img.setAttribute('src', "images/camera-icon.png");
+            $("#cid").val("");
+            $("#prefix").val("");
+            $("#fname").val("");
+            $("#lname").val("");
+            $("#address").val("");
+            $("#birthday").val("");
+            $("#sex").val("");
+            $("#disease").val("");
+            $("#drug").val("");
+            $("#hn").val("");
+            $("#id").val("");
+            $("#tel").val("");
         }
     </script>
 

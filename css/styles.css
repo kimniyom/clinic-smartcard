@@ -1,25 +1,36 @@
 @media (prefers-color-scheme: dark) {
-    body { background:  #333; color: white; }
-  }
-  
-  @media (prefers-color-scheme: light) {
-    body { background:  #ddd; color: black; }
-  }
+    body {
+        background: #333;
+        color: white;
+    }
+}
 
-  #body-login{
-      margin: 20px;
-  }
+@media (prefers-color-scheme: light) {
+    body {
+        background: #ddd;
+        color: black;
+    }
+}
 
-  #exserver{
-      font-size: 12px;
-      color: #ddd;
-  }
+#body-login {
+    margin: 20px;
+}
 
-  .input-group-text{
-      width: 40px;
-      text-align: center !important;
-  }
+#exserver {
+    font-size: 12px;
+    color: #ddd;
+}
 
-  .box-left{
-      background: #111111;
-  }
+.input-group-text {
+    width: 40px;
+    text-align: center !important;
+}
+
+.box-left {
+    background: #111111;
+}
+
+.form-control {
+    background: #333 !important;
+    color: rgb(0, 161, 161) !important;
+}

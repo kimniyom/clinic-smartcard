@@ -1,12 +1,13 @@
-fetchData();
-function fetchData() {
+//fetchData();
+
+function searchPatient(cid) {
     let api = localStorage.getItem('server-clinic-card');
     var url = api + "/patient/checkpatientsmartcard";
     if (api == null) {
         alert("ยังไม่ได้เชื่อมต่อเครื่องแม่ข่าย...!!");
         return false;
     } else {
-        var card = "1530600027345";
+        var card = cid;
         var data = {
             card: card
         };
