@@ -2,7 +2,6 @@
 const {app, BrowserWindow, ipcMain, nativeTheme,ipcRenderer} = require('electron')
 const path = require('path')
 
-
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -11,7 +10,7 @@ function createWindow () {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: false,
+      nodeIntegration: true,
       'web-security': false,
       'plugins': true
     }
@@ -23,8 +22,6 @@ function createWindow () {
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 }
-
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
