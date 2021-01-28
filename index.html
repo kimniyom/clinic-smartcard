@@ -16,6 +16,7 @@
     <script src="./js/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./controller/index.js"></script>
     <!--load all styles -->
 </head>
 
@@ -23,7 +24,7 @@
     <div class="screen" style="height: 100vh; width: 100px; position: fixed; z-index: -1;"></div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="far fa-address-card text-danger"></i> อ่านบัตรประชาชน</a>
+            <a class="nav-link active" id="home-tab" style="border-left: 0px;" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="far fa-address-card text-danger"></i> อ่านบัตรประชาชน</a>
         </li>
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"><i class="fas fa-cog text-warning"></i> ตั้งค่าการเชื่อมต่อ Server</a>
@@ -43,7 +44,7 @@
                                     <img id="card_img" src="images/camera-icon.png" style="max-height: 200px; border-radius: 10px;" /><br/>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-lg-6 col-md-8 col-sm-12">
+                                    <div class="col-lg-7 col-md-8 col-sm-12">
                                         <label class="sr-only" for="inlineFormInput">CID</label>
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend">
@@ -55,7 +56,7 @@
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="col-md-4 col-lg-3 col-sm-6">
+                                    <div class="col-md-4 col-lg-4 col-sm-6">
                                         <label class="sr-only" for="inlineFormInput">คำนำหน้าชื่อ</label>
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend">
@@ -64,7 +65,7 @@
                                             <input type="text" class="form-control" id="prefix" placeholder="คำนำหน้าชื่อ..">
                                         </div>
                                     </div>
-                                    <div class="col-md-8 col-lg-5 col-sm-6">
+                                    <div class="col-md-8 col-lg-8 col-sm-6">
                                         <label class="sr-only" for="inlineFormInput">ชื่อ</label>
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend">
@@ -97,7 +98,7 @@
                                             <input type="text" class="form-control" id="sex" placeholder="เพศ..">
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="col-md-6 col-lg-8 col-sm-12">
                                         <label class="sr-only" for="inlineFormInput">วันเกิด</label>
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend">
@@ -108,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="col-md-6 col-lg-4 col-sm-12">
+                                    <div class="col-md-8 col-lg-6 col-sm-12">
                                         <label class="sr-only" for="inlineFormInput">โทรศัพท์</label>
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend">
@@ -151,28 +152,31 @@
                             </form>
                         </div>
                         <div class="row">
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-secondary mb-2"><i class="far fa-save"></i>
+                            <div class="col-auto" id="btn-register" style="display: none;">
+                                <button type="button" class="btn btn-secondary mb-2"><i class="far fa-save"></i>
                                     ลงทะเบียนรายใหม่</button>
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-secondary mb-2" onclick="readcard()"><i class="far fa-eye"></i>
-                                    อ่านข้อมูลบัตร</button>
+                                <button type="button" class="btn btn-secondary mb-2" onclick="Updateregister()" style="display: none;" id="btn-update-enabled">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    ปรับปรุงข้อมูล</button>
+                                    <button type="button" class="btn btn-secondary mb-2 disabled" style="display: none;" id="btn-update-disabled">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        ปรับปรุงข้อมูล</button>
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" class="form-control" id="hn"><br />
-                    <input type="hidden" class="form-control" id="id"><br />
+                    <input type="hidden" class="form-control" id="hn">
+                    <input type="hidden" class="form-control" id="id">
                     <div class="col-md-6 col-lg-6">
                         <i class="fa fa-male"></i> <label>ตรวจร่างกาย / ซักประวัติ</label>
                         <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
 
-
                             <div class="row" style=" margin: 0px;">
                                 <div class="col-md-12 col-lg-12" style=" padding-bottom: 0px;" id="seqright">
-                                    <div class="alert alert-danger">เครื่องหมาย * ห้ามว่าง</div>
+                                    <div style="color: #ff2600; margin-bottom: 10px;">เครื่องหมาย * ห้ามว่าง</div>
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
                                             <label>น้ำหนัก</label>
                                             <div class="input-group mb-2">
                                                 <input type="text" class="form-control" id="weight" onKeyUp="if (this.value * 1 != this.value)
@@ -183,7 +187,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
                                             <label>ส่วนสูง</label>
                                             <div class="input-group mb-2">
                                                 <input type="text" class="form-control" id="height" onKeyUp="if (this.value * 1 != this.value)
@@ -196,7 +200,7 @@
                                     </div>
                                     <div>
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <label>อุณหภูมิร่างกาย</label>
                                                 <div class="input-group mb-2">
                                                     <input type="text" class="form-control" id="btemp" onKeyUp="if (this.value * 1 != this.value)
@@ -207,7 +211,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <label>อัตราการเต้นชีพจร</label>
                                                 <div class="input-group mb-2">
                                                     <input type="text" class="form-control" id="pr" onKeyUp="if (this.value * 1 != this.value)
@@ -219,7 +223,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <label>อัตราการหายใจ</label>
                                                 <div class="input-group mb-2">
                                                     <input type="text" class="form-control" id="rr" onKeyUp="if (this.value * 1 != this.value)
@@ -229,7 +233,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <label>ความดันโลหิต</label>
                                                 <div class="input-group mb-2">
                                                     <input type="text" class="form-control" id="ht" onKeyUp="if (this.value * 1 != this.value)
@@ -237,7 +241,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <label>รอบเอว</label>
+                                                <label>รอบเอว(เซนติเมตร)</label>
                                                 <div class="input-group mb-2">
                                                     <input type="text" class="form-control" id="waistline" onKeyUp="if (this.value * 1 != this.value)
                                                                 this.value = '';" placeholder="รอบเอว..">
@@ -254,8 +258,10 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-people-arrows"></i>
-                            นำเข้าคิวห้องตรวจ</button>
+                        <button type="submit" class="btn btn-secondary mb-2" onclick="sendSeq()">
+                            <i class="fas fa-people-arrows"></i>
+                            นำเข้าคิวห้องตรวจ
+                        </button>
                     </div>
                 </div>
 
@@ -290,7 +296,7 @@
     <script src="./renderer.js"></script>
     <script src="./assets/bootstrap/js/bootstrap.js"></script>
     <script src="./js/popper.min.js"></script>
-    <script src="./controller/index.js"></script>
+   
     <script type="text/javascript">
         setScreen();
 
@@ -359,7 +365,7 @@
             }
             $("#sex").val(sex);
             searchPatient(rs.cid);
-            //searchPatient(rs.name.firstname, rs.name.lastname);
+            
         });
 
         socket.on('smc-error', function(data) {
@@ -408,6 +414,14 @@
             $("#hn").val("");
             $("#id").val("");
             $("#tel").val("");
+            $("#weight").val("");
+            $("#height").val("");
+            $("#btemp").val("");
+            $("#pr").val("");
+            $("#rr").val("");
+            $("#ht").val("");
+            $("#waistline").val("");
+            $("#cc_detail").val("");
         }
     </script>
 

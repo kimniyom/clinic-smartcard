@@ -7,7 +7,10 @@
     <title>Setting</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
     <link href="../assets/fontawesome/css/all.css" rel="stylesheet">
+
+    
 </head>
 
 <body>
@@ -22,11 +25,18 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4 col-lg-4">
-                        <label>Server Ip</label>
+                        <label>IP Server</label>
                         <input type="text" class="form-control" id="server_ip"/>
+                        <label id="exserver" style="color: #7a7a7a;">Ex.http://localhost:0000</label>
                     </div>
                 </div>
-                <label id="exserver">Ex.http://localhost:0000</label>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <label>Server คิว</label>
+                        <input type="text" class="form-control" id="server_queue"/>
+                        <label id="exserver" style="color: #7a7a7a;">Ex.http://localhost:1234</label>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-primary" onclick="saveServer()"><i class="fas fa-save"></i> บันทึกการตั้งค่า</button>
