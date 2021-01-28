@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
     <link href="./assets/fontawesome/css/all.css" rel="stylesheet">
     <script src="./js/jquery-3.2.1.slim.min.js"></script>
+    <!--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    -->
+    <script src="./js/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./controller/index.js"></script>
     <!--load all styles -->
@@ -160,7 +163,7 @@
                                 <button type="button" class="btn btn-secondary mb-2" onclick="Updateregister()" style="display: none;" id="btn-update-enabled">
                                     <i class="fas fa-pencil-alt"></i>
                                     ปรับปรุงข้อมูล</button>
-                                    <button type="button" class="btn btn-secondary mb-2 disabled" style="display: none;" id="btn-update-disabled">
+                                <button type="button" class="btn btn-secondary mb-2 disabled" style="display: none;" id="btn-update-disabled">
                                         <i class="fas fa-pencil-alt"></i>
                                         ปรับปรุงข้อมูล</button>
                             </div>
@@ -293,10 +296,30 @@
     </div>
     <!-- You can also require other files to run in this process -->
 
+    <div class="modal" tabindex="-1" role="dialog" id="pull-card">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <p>นำเข้าคิวบริการแล้ว ... กรุณาดึงบัตรประชาชนออกจากเครื่อง</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="./renderer.js"></script>
     <script src="./assets/bootstrap/js/bootstrap.js"></script>
     <script src="./js/popper.min.js"></script>
-   
+
     <script type="text/javascript">
         setScreen();
 
@@ -365,7 +388,7 @@
             }
             $("#sex").val(sex);
             searchPatient(rs.cid);
-            
+
         });
 
         socket.on('smc-error', function(data) {

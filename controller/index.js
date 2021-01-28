@@ -1,4 +1,6 @@
-searchPatient();
+//searchPatient();
+var serverSEQ = localStorage.getItem('server-clinic-queue');
+const socketSEQ = io.connect(serverSEQ);
 
 function searchPatient() {
     let api = localStorage.getItem('server-clinic-card');
@@ -7,10 +9,8 @@ function searchPatient() {
         alert("ยังไม่ได้เชื่อมต่อเครื่องแม่ข่าย...!!");
         return false;
     } else {
-        var card = "1530600027345";
-        var data = {
-            card: card
-        };
+        var card = $("#cid").val();
+        var data = { card: card };
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.post(url, data)
             .then((response) => {
@@ -130,13 +130,15 @@ function sendSeq() {
     axios.post(url, data)
         .then((response) => {
             let res = response.data;
-            if(res.status == 1){
-                alert("นำเข้าคิวบริการแล้ว ... กรุณาดึงบัตรประชาชนออกจากเครื่อง");
+            if (res.status == 1) {
+                nodeloadtable();
+                //alert("นำเข้าคิวบริการแล้ว ... กรุณาดึงบัตรประชาชนออกจากเครื่อง");
+                $("#pull-card").modal();
+                new Audio('./sound/clode-card.mp3').play();
             } else {
                 alert("เกิดข้อผิดพลาดกรุณาตรวจสอบ...");
                 return false;
             }
-            //nodeloadtable();
         })
         .catch((error) => {
             console.error(error);
@@ -149,20 +151,35 @@ function sendSeq() {
     */
 }
 
-//คิวห้องหมอ
+//คิวหน้าห้องตรวจ
 function nodeloadtable() {
     let api = localStorage.getItem('server-clinic-card');
-    var serverSEQ = localStorage.getItem('server-clinic-queue');
-    var socket = io.connect(serverSEQ);
     var url = api + "/queue/getdata";
-    var id = "seqemployeeramet";
-    var data = {a: 1};
-    $.post(url, data, function(datas) {
-        socket.emit(id, datas);
-        //ReautoloadseqDoctor();
-    });
+    var data = { a: 1 };
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+    axios.post(url, data)
+        .then((response) => {
+            let res = response.data;
+            socketSEQ.emit("seqemployeeramet", res);
+            ReautoloadseqDoctor();
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
-
-
-
+//คิวห้องหมอ
+function ReautoloadseqDoctor() {
+    let api = localStorage.getItem('server-clinic-card');
+    var url = api + "/queue/seqdoctor";
+    var data = { a: 1 };
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+    axios.post(url, data)
+        .then((response) => {
+            let res = response.data;
+            socketSEQ.emit("seqemployeedoctorramet", res, (success) => {});
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
