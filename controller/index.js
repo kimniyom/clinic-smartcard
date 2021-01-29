@@ -47,10 +47,28 @@ function saveRegister() {
     var name = $("#fname").val();
     var lname = $("#lname").val();
     var birth = $("#birthday").val();
-    var card = $("#card").val();
+    var card = $("#cid").val();
     var contact = $("#address").val();
-    var prefix = $("#prefix").val();
+    //var prefix = $("#prefix").val();
     var url = api + "/patient/registersmartcard";
+    var data = {
+        name: name,
+        lname: lname,
+        birth: birth,
+        card: card,
+        contact: contact,
+        tel: tel,
+        patient_disease: patient_disease,
+        patient_drug: patient_drug
+    };
+    if(name == "" || lname == "" || birth == "" || card == "" || contact == "" || tel == ""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'กรุณากรอกข้อมูลให้ครบ..!',
+            //footer: '<a href>Why do I have this issue?</a>'
+          });
+    }
     if (api == null) {
         alert("ยังไม่ได้เชื่อมต่อเครื่องแม่ข่าย...!!");
         return false;
@@ -100,7 +118,13 @@ function sendSeq() {
 
     var patient = $("#id").val();
     if (patient == "") {
-        alert("ไม่พบบัตรประชาชน...");
+        //alert("ไม่พบบัตรประชาชน...");
+        Swal.fire({
+            icon: 'error',
+            title: 'ไม่พบบัตรประชาชน...!',
+            text: 'กรุณาถอดแล้วเสียบบัตรใหม่',
+            //footer: 'กรุณาถอดแล้วเสียบใหม่'
+          });
         return false;
     }
     var weight = $("#weight").val();

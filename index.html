@@ -27,10 +27,13 @@
     <div class="screen" style="height: 100vh; width: 100px; position: fixed; z-index: -1;"></div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" style="border-left: 0px;" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="far fa-address-card text-danger"></i> อ่านบัตรประชาชน</a>
+            <a class="nav-link active" id="home-tab" style="border-left: 0px;" data-toggle="tab" href="#home" role="tab"
+                aria-controls="home" aria-selected="true"><i class="far fa-address-card text-danger"></i>
+                อ่านบัตรประชาชน</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"><i class="fas fa-cog text-warning"></i> ตั้งค่าการเชื่อมต่อ Server</a>
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                aria-selected="false"><i class="fas fa-cog text-warning"></i> ตั้งค่าการเชื่อมต่อ Server</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -39,12 +42,15 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-6">
                         <label>ข้อมูลหน้าบัตร</label>
-                        <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 20px; border-radius: 5px; margin-bottom: 10px;">
-                            <label id="statuscard" class="alert alert-danger" style="width: 100%; text-align: center; display: none;">กรุณาเสียบบัตร Smart
+                        <div class="box-left"
+                            style="overflow:auto; border: solid 1px #666666; padding: 20px; border-radius: 5px; margin-bottom: 10px;">
+                            <label id="statuscard" class="alert alert-danger"
+                                style="width: 100%; text-align: center; display: none;">กรุณาเสียบบัตร Smart
                                 Card</label>
                             <form>
                                 <div style="margin-bottom: 20px;">
-                                    <img id="card_img" src="images/camera-icon.png" style="max-height: 200px; border-radius: 10px;" /><br/>
+                                    <img id="card_img" src="images/camera-icon.png"
+                                        style="max-height: 200px; border-radius: 10px;" /><br />
                                 </div>
                                 <div class="form-row">
                                     <div class="col-lg-7 col-md-8 col-sm-12">
@@ -65,7 +71,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="far fa-user"></i></div>
                                             </div>
-                                            <input type="text" class="form-control" id="prefix" placeholder="คำนำหน้าชื่อ..">
+                                            <input type="text" class="form-control" id="prefix"
+                                                placeholder="คำนำหน้าชื่อ..">
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-8 col-sm-6">
@@ -107,7 +114,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="far fa-id-card"></i></div>
                                             </div>
-                                            <input type="text" class="form-control" id="birthday" placeholder="วันเกิด..">
+                                            <input type="text" class="form-control" id="birthday"
+                                                placeholder="วันเกิด..">
                                         </div>
                                     </div>
                                 </div>
@@ -118,7 +126,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="fas fa-phone"></i></div>
                                             </div>
-                                            <input type="text" class="form-control" id="tel" maxlength="10" placeholder="โทรศัพท์.." onKeyUp="if (this.value * 1 != this.value)
+                                            <input type="text" class="form-control" id="tel" maxlength="10"
+                                                placeholder="โทรศัพท์.." onKeyUp="if (this.value * 1 != this.value)
                                             this.value = '';">
                                         </div>
                                     </div>
@@ -129,7 +138,8 @@
                                         <i class="far fa-address-card"></i> <label>ที่อยู่</label>
                                         <label class="sr-only" for="inlineFormInput">ที่อยู่</label>
                                         <div class="input-group mb-2">
-                                            <textarea class="form-control" id="address" rows="3" placeholder="ที่อยู่..."></textarea>
+                                            <textarea class="form-control" id="address" rows="3"
+                                                placeholder="ที่อยู่..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +148,8 @@
                                     <div class="col-12">
                                         <i class="fas fa-shield-virus"></i> <label>โรคประจำตัว(* ถ้ามี)</label>
                                         <div class="input-group mb-2">
-                                            <textarea class="form-control" id="disease" rows="2" placeholder="โรคประจำตัว..."></textarea>
+                                            <textarea class="form-control" id="disease" rows="2"
+                                                placeholder="โรคประจำตัว..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +158,8 @@
                                     <div class="col-12">
                                         <i class="fas fa-pills"></i> <label>แพ้ยา(* ถ้ามี)</label>
                                         <div class="input-group mb-2">
-                                            <textarea class="form-control" id="drug" rows="2" placeholder="แพ้ยา..."></textarea>
+                                            <textarea class="form-control" id="drug" rows="2"
+                                                placeholder="แพ้ยา..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -160,12 +172,14 @@
                                     ลงทะเบียนรายใหม่</button>
                             </div>
                             <div class="col-auto">
-                                <button type="button" class="btn btn-secondary mb-2" onclick="Updateregister()" style="display: none;" id="btn-update-enabled">
+                                <button type="button" class="btn btn-secondary mb-2" onclick="Updateregister()"
+                                    style="display: none;" id="btn-update-enabled">
                                     <i class="fas fa-pencil-alt"></i>
                                     ปรับปรุงข้อมูล</button>
-                                <button type="button" class="btn btn-secondary mb-2 disabled" style="display: none;" id="btn-update-disabled">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        ปรับปรุงข้อมูล</button>
+                                <button type="button" class="btn btn-secondary mb-2 disabled" style="display: none;"
+                                    id="btn-update-disabled">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    ปรับปรุงข้อมูล</button>
                             </div>
                         </div>
                     </div>
@@ -173,7 +187,8 @@
                     <input type="hidden" class="form-control" id="id">
                     <div class="col-md-6 col-lg-6">
                         <i class="fa fa-male"></i> <label>ตรวจร่างกาย / ซักประวัติ</label>
-                        <div class="box-left" style="overflow:auto; border: solid 1px #666666; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                        <div class="box-left"
+                            style="overflow:auto; border: solid 1px #666666; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
 
                             <div class="row" style=" margin: 0px;">
                                 <div class="col-md-12 col-lg-12" style=" padding-bottom: 0px;" id="seqright">
@@ -254,8 +269,10 @@
                                     </div>
                                     <div class="row" style=" margin-top: 20px;">
                                         <div class="col-lg-12">
-                                            <b style=" font-size: 16px; color: #cc6600;"><i class="fa fa-frown-o"></i> อาการที่มารักษา <span style="color:red;">*</span></b>
-                                            <textarea class="form-control" name="cc_detail" id="cc_detail" rows="5"></textarea>
+                                            <b style=" font-size: 16px; color: #cc6600;"><i class="fa fa-frown-o"></i>
+                                                อาการที่มารักษา <span style="color:red;">*</span></b>
+                                            <textarea class="form-control" name="cc_detail" id="cc_detail"
+                                                rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -302,8 +319,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <p>นำเข้าคิวบริการแล้ว ... กรุณาดึงบัตรประชาชนออกจากเครื่อง</p>
@@ -319,6 +336,7 @@
     <script src="./renderer.js"></script>
     <script src="./assets/bootstrap/js/bootstrap.js"></script>
     <script src="./js/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script type="text/javascript">
         setScreen();
@@ -337,7 +355,13 @@
             if (username == "admin" && password == "minad") {
                 window.location = "page/setting.html";
             } else {
-                alert("Login Fail...!!!");
+                //alert("Login Fail...!!!");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Fail...!!!',
+                    //text: 'กรุณากรอกข้อมูลให้ครบ..!',
+                    //footer: '<a href>Why do I have this issue?</a>'
+                });
             }
         }
 
@@ -349,7 +373,7 @@
         //alert("ระบบ Smart Card มีปัญหาไม่สามารถเชื่อมต่อได้...");
         //return false;
 
-        socket.on('connect', function() {
+        socket.on('connect', function () {
             socket.emit('set-query', {
                 query: [
                     'cid',
@@ -367,7 +391,7 @@
             });
         });
 
-        socket.on('smc-data', function(data) {
+        socket.on('smc-data', function (data) {
             console.log(data);
             //let res = JSON.stringify(data);
             let rs = data.data;
@@ -391,14 +415,14 @@
 
         });
 
-        socket.on('smc-error', function(data) {
+        socket.on('smc-error', function (data) {
             console.log(data);
             let datas = JSON.stringify(data);
             //$("#card").html(datas);
             alert("เกิดข้อผิดพลาดกรุณาปิดแล้วเปิดโปรแกรมใหม่...");
         });
 
-        socket.on('smc-removed', function(data) {
+        socket.on('smc-removed', function (data) {
             console.log(data);
             let datas = JSON.stringify(data);
             if (data.status == 205) {
@@ -409,14 +433,14 @@
             //$("#card").html(datas);
         });
 
-        socket.on('smc-incorrect', function(data) {
+        socket.on('smc-incorrect', function (data) {
             $("#statuscard").hide();
             //console.log(data);
             //let datas = JSON.stringify(data);
             //$("#card").html(datas);
         });
 
-        socket.on('smc-inserted', function(data) {
+        socket.on('smc-inserted', function (data) {
             $("#statuscard").hide();
             //console.log(data);
             //let datas = JSON.stringify(data);
